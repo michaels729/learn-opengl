@@ -41,8 +41,8 @@ int main()
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
 #endif
 
-                                                       // glfw window creation
-                                                       // --------------------
+  // glfw window creation
+  // --------------------
   GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
   if (window == NULL)
   {
@@ -63,7 +63,7 @@ int main()
 
   // build and compile our shader program
   // ------------------------------------
-  Shader shader("./VertexShader.glsl", "./FragShader.glsl");
+  Shader shader("./ShaderEx2.VertexShader.glsl", "./FragShader.glsl");
 
   // set up vertex data (and buffer(s)) and configure vertex attributes
   // ------------------------------------------------------------------
@@ -109,6 +109,7 @@ int main()
 
     // render the triangle
     shader.use();
+    shader.setFloat("xOffset", 0.5f);
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
