@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 
 #include "Shader.h"
 #include "stb_image.h"
@@ -17,6 +18,9 @@ void processInput(GLFWwindow *window);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
+
+int aspectWidth = SCR_WIDTH;
+int aspectHeight = SCR_HEIGHT;
 
 int main()
 {
@@ -33,7 +37,7 @@ int main()
 
   // glfw window creation
   // --------------------
-  GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+  GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
   if (window == NULL)
   {
     std::cout << "Failed to create GLFW window" << std::endl;
@@ -163,7 +167,7 @@ int main()
   unsigned int texture1, texture2;
   glGenTextures(1, &texture1);
   glBindTexture(GL_TEXTURE_2D, texture1); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
-  // set the texture wrapping/filtering options (on the currently bound texture object)
+                                          // set the texture wrapping/filtering options (on the currently bound texture object)
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -175,14 +179,15 @@ int main()
   if (data) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
-  } else {
+  }
+  else {
     std::cout << "Failed to load texture" << std::endl;
   }
   stbi_image_free(data);
 
   glGenTextures(1, &texture2);
   glBindTexture(GL_TEXTURE_2D, texture2); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
-  // set the texture wrapping/filtering options (on the currently bound texture object)
+                                          // set the texture wrapping/filtering options (on the currently bound texture object)
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -241,7 +246,7 @@ int main()
     view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 
     glm::mat4 projection(1.0f);
-    projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+    projection = glm::perspective(glm::radians(45.0f), (float)aspectWidth/(float)aspectHeight, 0.1f, 100.0f);
     for (int i = 0; i < 10; ++i) {
       glm::mat4 model(1.0f);
       model = glm::translate(model, cubePositions[i]);
@@ -278,8 +283,21 @@ int main()
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow *window)
 {
-  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, true);
+  }
+  if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+    aspectHeight = std::min(1200, aspectHeight + 1);
+  }
+  if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+    aspectHeight = std::max(300, aspectHeight - 1);
+  }
+  if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+    aspectWidth = std::min(1600, aspectWidth + 1);
+  }
+  if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+    aspectWidth = std::max(400, aspectWidth - 1);
+  }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

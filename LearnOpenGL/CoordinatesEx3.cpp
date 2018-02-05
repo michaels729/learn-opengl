@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <algorithm>
 
 #include "Shader.h"
 #include "stb_image.h"
@@ -17,6 +18,10 @@ void processInput(GLFWwindow *window);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
+
+float viewX = 0.0f;
+float viewY = 0.0f;
+float viewZ = -3.0f;
 
 int main()
 {
@@ -31,9 +36,9 @@ int main()
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
 #endif
 
-  // glfw window creation
-  // --------------------
-  GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+                                                       // glfw window creation
+                                                       // --------------------
+  GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
   if (window == NULL)
   {
     std::cout << "Failed to create GLFW window" << std::endl;
@@ -163,7 +168,7 @@ int main()
   unsigned int texture1, texture2;
   glGenTextures(1, &texture1);
   glBindTexture(GL_TEXTURE_2D, texture1); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
-  // set the texture wrapping/filtering options (on the currently bound texture object)
+                                          // set the texture wrapping/filtering options (on the currently bound texture object)
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -175,14 +180,15 @@ int main()
   if (data) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
-  } else {
+  }
+  else {
     std::cout << "Failed to load texture" << std::endl;
   }
   stbi_image_free(data);
 
   glGenTextures(1, &texture2);
   glBindTexture(GL_TEXTURE_2D, texture2); // all upcoming GL_TEXTURE_2D operations now have effect on this texture object
-  // set the texture wrapping/filtering options (on the currently bound texture object)
+                                          // set the texture wrapping/filtering options (on the currently bound texture object)
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -238,14 +244,14 @@ int main()
     // render the triangle
     // transformations
     glm::mat4 view(1.0f);
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+    view = glm::translate(view, glm::vec3(viewX, viewY, viewZ));
 
     glm::mat4 projection(1.0f);
     projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
     for (int i = 0; i < 10; ++i) {
       glm::mat4 model(1.0f);
       model = glm::translate(model, cubePositions[i]);
-      float angle = 20.0f * i;
+      float angle = i % 3 == 0 ? 25.0f * i * glfwGetTime() : 20.0f * i;
       model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
 
       ourShader.use();
@@ -278,8 +284,27 @@ int main()
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow *window)
 {
-  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, true);
+  }
+  if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+    viewX = std::min((float)SCR_WIDTH / 2.0f, viewX + 0.1f);
+  }
+  if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+    viewX = std::max(-(float)SCR_WIDTH / 2.0f, viewX - 0.1f);
+  }
+  if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+    viewY = std::min((float)SCR_HEIGHT / 2.0f, viewY + 0.1f);
+  }
+  if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+    viewY = std::max(-(float)SCR_HEIGHT / 2.0f, viewY - 0.1f);
+  }
+  if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+    viewZ = std::min(100.0f, viewZ + 0.1f);
+  }
+  if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+    viewZ = std::max(-100.0f, viewZ - 0.1f);
+  }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
