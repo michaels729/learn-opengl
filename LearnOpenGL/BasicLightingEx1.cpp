@@ -25,7 +25,7 @@ const unsigned int SCR_HEIGHT = 600;
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
 
-// Camera (view matrix) settings
+                        // Camera (view matrix) settings
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float fovy = 45.0f;
 float lastX = 400.0f, lastY = 300.0f;
@@ -48,8 +48,8 @@ int main()
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
 #endif
 
-  // glfw window creation
-  // --------------------
+                                                       // glfw window creation
+                                                       // --------------------
   GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
   if (window == NULL)
   {
@@ -72,7 +72,7 @@ int main()
 
   // build and compile our shader program
   // ------------------------------------
-  Shader lightingShader("./BasicLightingEx4.lighting.VertexShader.glsl", "./BasicLightingEx4.lighting.FragShader.glsl");
+  Shader lightingShader("./lighting.VertexShader.glsl", "./lighting.FragShader.glsl");
   Shader lampShader("./lamp.VertexShader.glsl", "./lamp.FragShader.glsl");
 
   // set up vertex data (and buffer(s)) and configure vertex attributes
@@ -178,6 +178,9 @@ int main()
 
     // activate lighting shader
     // ------------------------
+    lightPos.x = 1.0f + sin(glfwGetTime()) * 2.0f;
+    lightPos.y = sin(glfwGetTime() / 2.0f) * 1.0f;
+
     lightingShader.use();
     lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
     lightingShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);

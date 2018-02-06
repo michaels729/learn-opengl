@@ -30,10 +30,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="FragShader.glsl">
+    <None Include="lighting.VertexShader.glsl">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="VertexShader.glsl">
+    <None Include="lighting.FragShader.glsl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="lamp.VertexShader.glsl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="lamp.FragShader.glsl">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
