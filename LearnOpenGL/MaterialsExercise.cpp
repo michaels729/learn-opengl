@@ -25,7 +25,7 @@ const unsigned int SCR_HEIGHT = 600;
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
 
-// Camera (view matrix) settings
+                        // Camera (view matrix) settings
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float fovy = 45.0f;
 float lastX = 400.0f, lastY = 300.0f;
@@ -48,8 +48,8 @@ int main()
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
 #endif
 
-  // glfw window creation
-  // --------------------
+                                                       // glfw window creation
+                                                       // --------------------
   GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
   if (window == NULL)
   {
@@ -179,13 +179,13 @@ int main()
     // activate lighting shader
     // ------------------------
     lightingShader.use();
-    lightingShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
-    lightingShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
-    lightingShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+    lightingShader.setVec3("material.ambient", 0.0f, 0.1f, 0.06f);
+    lightingShader.setVec3("material.diffuse", 0.0f, 0.50980392f, 0.50980392f);
+    lightingShader.setVec3("material.specular", 0.50196078f, 0.50196078f, 0.50196078f);
     lightingShader.setFloat("material.shininess", 32.0f);
-    lightingShader.setVec3("light.ambient", 0.2f, 0.2f, 0.2f);
-    lightingShader.setVec3("light.diffuse", 0.5f, 0.5f, 0.5f); // darken the light a bit to fit the scene
-    lightingShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+    lightingShader.setVec3("light.ambient", glm::vec3(1.0f));
+    lightingShader.setVec3("light.diffuse", glm::vec3(1.0f));
+    lightingShader.setVec3("light.specular", glm::vec3(1.0f));
     lightingShader.setVec3("lightPos", lightPos);
     lightingShader.setVec3("viewPos", camera.Position);
 
