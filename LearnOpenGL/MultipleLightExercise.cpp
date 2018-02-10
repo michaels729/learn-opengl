@@ -26,7 +26,7 @@ const unsigned int SCR_HEIGHT = 600;
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
 
-// Camera (view matrix) settings
+                        // Camera (view matrix) settings
 Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 float fovy = 45.0f;
 float lastX = 400.0f, lastY = 300.0f;
@@ -48,8 +48,8 @@ int main() {
   glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
 #endif
 
-  // glfw window creation
-  // --------------------
+                                                       // glfw window creation
+                                                       // --------------------
   GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
   if (window == NULL)
   {
@@ -82,19 +82,19 @@ int main() {
 
   // set up vertex data (and buffer(s)) and configure vertex attributes
   // ------------------------------------------------------------------
-float vertices[] = {
+  float vertices[] = {
     // positions          // normals           // texture coords
     -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+    0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
+    0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
+    0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
     -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
     -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
 
     -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+    0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 0.0f,
+    0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
+    0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   1.0f, 1.0f,
     -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 1.0f,
     -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,   0.0f, 0.0f,
 
@@ -105,40 +105,40 @@ float vertices[] = {
     -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
     -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
 
-     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+    0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+    0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+    0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+    0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+    0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+    0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
 
     -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+    0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
+    0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+    0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
     -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
     -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f,
 
     -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+    0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
+    0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+    0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
     -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
     -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f
-};
+  };
 
-glm::vec3 cubePositions[] = {
-  glm::vec3(0.0f,  0.0f,  0.0f),
-  glm::vec3(2.0f,  5.0f, -15.0f),
-  glm::vec3(-1.5f, -2.2f, -2.5f),
-  glm::vec3(-3.8f, -2.0f, -12.3f),
-  glm::vec3(2.4f, -0.4f, -3.5f),
-  glm::vec3(-1.7f,  3.0f, -7.5f),
-  glm::vec3(1.3f, -2.0f, -2.5f),
-  glm::vec3(1.5f,  2.0f, -2.5f),
-  glm::vec3(1.5f,  0.2f, -1.5f),
-  glm::vec3(-1.3f,  1.0f, -1.5f)
-};
+  glm::vec3 cubePositions[] = {
+    glm::vec3(0.0f,  0.0f,  0.0f),
+    glm::vec3(2.0f,  5.0f, -15.0f),
+    glm::vec3(-1.5f, -2.2f, -2.5f),
+    glm::vec3(-3.8f, -2.0f, -12.3f),
+    glm::vec3(2.4f, -0.4f, -3.5f),
+    glm::vec3(-1.7f,  3.0f, -7.5f),
+    glm::vec3(1.3f, -2.0f, -2.5f),
+    glm::vec3(1.5f,  2.0f, -2.5f),
+    glm::vec3(1.5f,  0.2f, -1.5f),
+    glm::vec3(-1.3f,  1.0f, -1.5f)
+  };
 
   // configure cube
   // --------------
@@ -185,6 +185,13 @@ glm::vec3 cubePositions[] = {
     glm::vec3(0.0f,  0.0f, -3.0f)
   };
 
+  glm::vec3 pointLightColors[] = {
+    glm::vec3(0.4f, 0.7f, 0.1f),
+    glm::vec3(0.4f, 0.7f, 0.1f),
+    glm::vec3(0.4f, 0.7f, 0.1f),
+    glm::vec3(0.4f, 0.7f, 0.1f)
+  };
+
   // render loop
   // -----------
   while (!glfwWindowShouldClose(window)) {
@@ -198,7 +205,7 @@ glm::vec3 cubePositions[] = {
 
     // render
     // ------
-    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // set view and projection matrices.
@@ -215,21 +222,21 @@ glm::vec3 cubePositions[] = {
 
     // directional light
     lightingShader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
-    lightingShader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
-    lightingShader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
-    lightingShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
+    lightingShader.setVec3("dirLight.ambient", 0.5f, 0.5f, 0.5f);
+    lightingShader.setVec3("dirLight.diffuse", 1.0f, 1.0f, 1.0f);
+    lightingShader.setVec3("dirLight.specular", 1.0f, 1.0f, 1.0f);
 
     // point lights
     const int NR_POINT_LIGHTS = 4;
     for (int i = 0; i < NR_POINT_LIGHTS; ++i) {
       std::string pointLightNumStr = "pointLights[" + std::to_string(i) + "]";
       lightingShader.setVec3(pointLightNumStr + ".position", pointLightPositions[i]);
-      lightingShader.setVec3(pointLightNumStr + ".ambient", 0.05f, 0.05f, 0.05f);
-      lightingShader.setVec3(pointLightNumStr + ".diffuse", 0.8f, 0.8f, 0.8f);
-      lightingShader.setVec3(pointLightNumStr + ".specular", 1.0f, 1.0f, 1.0f);
+      lightingShader.setVec3(pointLightNumStr + ".ambient", pointLightColors[i].x * 0.1, pointLightColors[i].y * 0.1, pointLightColors[i].z * 0.1);
+      lightingShader.setVec3(pointLightNumStr + ".diffuse", pointLightColors[i]);
+      lightingShader.setVec3(pointLightNumStr + ".specular", pointLightColors[i]);
       lightingShader.setFloat(pointLightNumStr + ".constant", 1.0f);
-      lightingShader.setFloat(pointLightNumStr + ".linear", 0.09);
-      lightingShader.setFloat(pointLightNumStr + ".quadratic", 0.032);
+      lightingShader.setFloat(pointLightNumStr + ".linear", 0.07f);
+      lightingShader.setFloat(pointLightNumStr + ".quadratic", 0.017f);
     }
 
     // spotlight
@@ -239,10 +246,10 @@ glm::vec3 cubePositions[] = {
     lightingShader.setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
     lightingShader.setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
     lightingShader.setFloat("spotLight.constant", 1.0f);
-    lightingShader.setFloat("spotLight.linear", 0.09);
-    lightingShader.setFloat("spotLight.quadratic", 0.032);
-    lightingShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
-    lightingShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+    lightingShader.setFloat("spotLight.linear", 0.07f);
+    lightingShader.setFloat("spotLight.quadratic", 0.017f);
+    lightingShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(7.0f)));
+    lightingShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(10.0f)));
 
     lightingShader.setVec3("viewPos", camera.Position);
 
@@ -364,9 +371,11 @@ unsigned int loadTexture(char const* path) {
     GLenum format;
     if (nrChannels == 1) {
       format = GL_RED;
-    } else if (nrChannels == 3) {
+    }
+    else if (nrChannels == 3) {
       format = GL_RGB;
-    } else if (nrChannels == 4) {
+    }
+    else if (nrChannels == 4) {
       format = GL_RGBA;
     }
     glBindTexture(GL_TEXTURE_2D, textureID);
@@ -378,7 +387,8 @@ unsigned int loadTexture(char const* path) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-  } else {
+  }
+  else {
     std::cout << "Failed to load texture" << std::endl;
   }
   stbi_image_free(data);
