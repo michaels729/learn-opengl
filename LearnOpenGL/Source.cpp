@@ -36,6 +36,9 @@ bool firstMouse = true;
 // lighting
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
+// whether to use blinn-phong shading
+bool blinn = false;
+
 int main() {
   // glfw: initialize and configure
   // ------------------------------
@@ -209,6 +212,9 @@ glm::vec3 cubePositions[] = {
     // activate lighting shader
     // ------------------------
     lightingShader.use();
+
+    lightingShader.setBool("blinn", blinn);
+
     lightingShader.setInt("material.diffuse", 0);
     lightingShader.setInt("material.specular", 1);
     lightingShader.setFloat("material.shininess", 64.0f);
@@ -322,6 +328,9 @@ void processInput(GLFWwindow *window)
   }
   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
     camera.ProcessKeyboard(RIGHT, deltaTime);
+  }
+  if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) {
+    blinn = !blinn;
   }
 }
 
